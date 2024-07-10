@@ -18,6 +18,12 @@ This repository contains the software for a crawler robot designed to navigate u
         ./cmds.sh setup
         ```
 
+3. **Visualize the RealSense and Livox LiDAR sensors:**
+    - To visualize the sensors' data in RViz, use the following command:
+        ```sh
+        roslaunch launch/sensors_bringup.launch use_realsense:=true use_livox:=true show_rviz:=true
+        ```
+
 ## Contributing
 Contributions are welcome! Please fork this repository and submit pull requests for any improvements or bug fixes.
 
