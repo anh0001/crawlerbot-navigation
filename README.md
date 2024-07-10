@@ -23,6 +23,12 @@ This repository contains the software for a crawler robot designed to navigate u
         ```sh
         roslaunch launch/sensors_bringup.launch use_realsense:=true use_livox:=true show_rviz:=true
         ```
+    - For recording to rosbag, run these commands:
+        ```sh
+        roslaunch launch/sensors_bringup.launch
+        roslaunch launch/record_sensors.launch
+        ```
+    - Output rosbag is in the rosbag folder.
 
 ## Contributing
 Contributions are welcome! Please fork this repository and submit pull requests for any improvements or bug fixes.
