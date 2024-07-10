@@ -15,7 +15,9 @@
             /camera/accel/imu_info
             /camera/gyro/imu_info
             /livox/imu
+            /livox/imu_custom
             /livox/lidar
+            /livox/lidar_custom
             /tf
             /tf_static">
      </node>
