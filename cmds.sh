@@ -139,8 +139,8 @@ setup() {
     log_message "Building ROS packages..."
     source devel/setup.bash
 
-    #install_realsense_sdk || return 1
-    if ! catkin_make; then
+    install_realsense_sdk || return 1
+    if ! catkin_make -DCATKIN_ENABLE_TESTING=False -DCMAKE_BUILD_TYPE=Release; then
             log_message "Error: Failed to build ROS packages."
             return 1
     fi

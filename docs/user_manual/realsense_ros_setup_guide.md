@@ -31,18 +31,21 @@ echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-## 2. Install the RealSense ROS Wrapper
+## 2. Install the RealSense SDK
 The RealSense ROS wrapper allows you to use RealSense cameras with ROS.
 
-Install the ROS wrapper for RealSense:
+First, add the Intel RealSense SDK key and repository, then install the necessary packages:
 ```bash
-sudo apt install ros-noetic-realsense2-camera ros-noetic-ddynamic-reconfigure ros-noetic-realsense2-camera ros-noetic-realsense2-description
+sudo apt-key adv --keyserver keys.gnupg.net --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE
+sudo add-apt-repository "deb https://librealsense.intel.com/Debian/apt-repo focal main" -u
+sudo apt update
+sudo apt-get install librealsense2-dkms librealsense2-utils librealsense2-dev librealsense2-dbg
 ```
 
 Clone the RealSense ROS wrapper repository, but use ros1-legacy as we are going to use ros1:
 ```bash
 cd src/
-git subtree add --prefix realsense-ros https://github.com/IntelRealSense/realsense-ros.git ros1-legacy --squash
+git submodule add -b ros1-legacy https://github.com/IntelRealSense/realsense-ros.git src/realsense-ros
 cd ..
 catkin_make
 ```
