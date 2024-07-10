@@ -1,0 +1,64 @@
+<launch>
+  <!-- Add these arguments -->
+  <arg name="use_realsense" default="true"/>
+  <arg name="use_livox" default="true"/>
+  <arg name="show_rviz" default="false"/>
+
+  <node name="base2livox_frame" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0.845  0 3.18 0 base_footprint livox_frame "/>
+	<node name="livox_frame2livox_link" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0  0 3.14 0 livox_frame livox_link "/>
+  <node name="base2camera_frame" pkg="tf2_ros" type="static_transform_publisher" args="0 0 1.105  0 0.422 0 base_footprint camera_frame "/>
+  <node name="camera_frame2camera_link" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0  0 0 0 camera_frame camera_link "/>
+
+  <!-- Conditional launch for RealSense camera node -->
+  <group if="$(arg use_realsense)">
+      <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+        <arg name="serial_no" value="" />
+        <arg name="depth_width" value="848" />
+        <arg name="depth_height" value="480" />
+        <arg name="color_width" value="848" />
+        <arg name="color_height" value="480" />
+        <arg name="color_fps" value="30" />
+        <arg name="enable_depth" value="true" />
+        <arg name="enable_color" value="true" />
+        <arg name="enable_infra1" value="false" />
+        <arg name="enable_infra2" value="false" />
+        <arg name="enable_fisheye" value="false" />
+        <arg name="enable_gyro" value="true" />
+        <arg name="enable_accel" value="true" />
+        <arg name="enable_pointcloud" value="$(arg show_rviz)" />  <!-- Enable pointcloud only if RViz is enabled, for alignment the static transform above -->
+        <arg name="enable_sync" value="true" />
+        <arg name="align_depth" value="true" />
+        <arg name="tf_prefix" value="camera" />
+        <arg name="unite_imu_method" value="linear_interpolation" />
+        <arg name="filters" value="" />
+        <arg name="clip_distance" value="-2" />
+        <arg name="linear_accel_cov" value="0.01" />
+        <arg name="initial_reset" value="true" />
+      </include>
+    </group>
+
+  <!-- Conditional launch for Livox driver node -->
+  <group if="$(arg use_livox)">
+      <include file="$(find livox_ros_driver2)/launch_ROS1/msg_MID360.launch">
+        <!-- 0 is for pointcloud2 format -->
+        <!-- 1 is for custom message format -->
+        <arg name="xfer_format" value="0"/>  
+        <arg name="multi_topic" value="0"/>
+        <arg name="data_src" value="0"/>
+        <arg name="publish_freq" value="10.0"/>
+        <arg name="output_type" value="0"/>
+        <arg name="rviz_enable" value="false"/>
+        <arg name="rosbag_enable" value="false"/>
+        <arg name="msg_frame_id" value="livox_frame"/>
+        <arg name="lidar_bag" value="true"/>
+        <arg name="imu_bag" value="true"/>
+        <param name="user_config_path" type="string" value="$(find livox_ros_driver2)/../../config/MID360_config.json"/>
+      </include>
+    </group>
+
+  <!-- Conditional launch for RViz -->
+  <group if="$(arg show_rviz)">
+    <node name="livox_rviz" pkg="rviz" type="rviz" respawn="true"
+      args="-d $(find livox_ros_driver2)/../../config/sensors/display_point_cloud_ROS1.rviz"/>
+  </group>
+</launch>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Robot Control Interface</title>
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/eventemitter2@6.4.9/lib/eventemitter2.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/roslib@1/build/roslib.min.js"></script>
+  <script type="text/javascript" src="js/rosbridge_setup.js"></script>
+  <script type="text/javascript" src="js/sensor_visualization.js"></script>
+</head>
+<body>
+  <h1>Robot Control Interface</h1>
+  <div id="controls">
+    <button onclick="startRecording()">Start Recording</button>
+    <button onclick="stopRecording()">Stop Recording</button>
+    <button onclick="pauseRecording()">Pause Recording</button>
+  </div>
+  <div id="connection">
+    <label for="websocket_url">WebSocket URL:</label>
+    <input type="text" id="websocket_url" value="ws://192.168.11.50:9090">
+    <button onclick="connectRos()">Connect</button>
+  </div>
+  <div id="camera_feed">
+    <img id="camera_image" />
+  </div>
+  <div>
+    <canvas id="lidar_data"></canvas>
+  </div>
+</body>
+</html>
