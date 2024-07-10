@@ -40,9 +40,12 @@
   <!-- Conditional launch for Livox driver node -->
   <group if="$(arg use_livox)">
       <include file="$(find livox_ros_driver2)/launch_ROS1/msg_MID360.launch">
-        <!-- 0 is for pointcloud2 format -->
-        <!-- 1 is for custom message format -->
-        <arg name="xfer_format" value="0"/>  
+        <!-- 0 is for livox pointcloud2 format -->
+        <!-- 1 is for livox custom message format -->
+        <!-- 2 is for standard pointcloud2 (pcl :: PointXYZI) -->
+        <!-- 3 is for livox IMU -->
+        <!-- 4 is two topics from livox pointcloud2 and livox custom message formats -->
+        <arg name="xfer_format" value="4"/>   
         <arg name="multi_topic" value="0"/>
         <arg name="data_src" value="0"/>
         <arg name="publish_freq" value="10.0"/>
