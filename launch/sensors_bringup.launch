@@ -52,7 +52,7 @@
         <arg name="msg_frame_id" value="livox_frame"/>
         <arg name="lidar_bag" value="true"/>
         <arg name="imu_bag" value="true"/>
-        <param name="user_config_path" type="string" value="$(find livox_ros_driver2)/../../config/MID360_config.json"/>
+        <arg name="user_config_path" value="$(find livox_ros_driver2)/../../config/sensors/MID360_config.json"/>
       </include>
     </group>
 
